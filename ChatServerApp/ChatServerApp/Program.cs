@@ -26,20 +26,33 @@ namespace ChatServerApp
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("Conexion Establecida");
-                        Console.WriteLine("S: Hola Mundo Cliente!");
-                        servidor.Escribir("Hola Mundo Cliente!");
-                        string mensaje = servidor.Leer();
-                        Console.WriteLine("C:{0}", mensaje);
-                        servidor.CerrarConexion();
+                        //Protocolo de comunicacion
+                        string mensaje = "";
+                        while (mensaje.ToLower() != "chao")
+                        {
+                            //Leo el mensaje del Cliente
+                            mensaje = servidor.Leer();
+                            Console.WriteLine("C:{0}", mensaje);
+                            if (mensaje.ToLower() != "chao")
+                            {
+                                //El Cliente espera una respuesta
+                                Console.WriteLine("Digame lo que quiere decir guruguru");
+                                mensaje = Console.ReadLine().Trim();
+                                Console.WriteLine("S:{0}", mensaje);
+                                servidor.Escribir(mensaje);
+                            }   
+                        }
+                            servidor.CerrarConexion();
+                        }
                     }
-                }
-               
-            }else
+
+                }else
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("No es posible iniciar servidor");
-                Console.ReadKey();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("No es posible iniciar servidor");
+                    Console.ReadKey();
+                }
             }
         }
     }
-}
+
